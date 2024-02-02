@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.study.week3.mapper.BoardMapper">
+
+    <insert id="insert" parameterType="com.study.week3.dto.InsertModelDto">
+        insert into board (category, title, content, reg_name)
+        values (#{category}, #{title}, #{content}, #{regName})
+    </insert>
+
+    <select id="selectAll" resultType="com.study.week3.dto.SelectResponseDto">
+        select id, title, category, content, reg_name, reg_dt, mod_name, mod_dt
+        from board
+        where del_yn = 'N'
+    </select>
+
+    <select id="selectOne" parameterType="int" resultType="com.study.week3.dto.SelectResponseDto">
+        select id, title, content, reg_name, reg_dt, mod_name, mod_dt
+        from board
+        where id = #{id}
+          and del_yn = 'N'
+    </select>
+
+    <update id="update" parameterType="com.study.week3.dto.UpdateModelDto">
+        update board
+        set title    = #{title},
+            content  = #{content},
+            mod_name = #{modName}
+        where id = #{id}
+          and del_yn = 'N'
+    </update>
+
+    <update id="delete" parameterType="int">
+        update board
+        set del_yn = 'Y'
+        where id = #{id}
+    </update>
+
+</mapper>
